@@ -1,8 +1,9 @@
 const express = require("express");
 const { todoModel } = require("./db");
 const { createTodoValidate, updateTodoValidate } = require("./types");
+const cors = require('cors');
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 app.get("/todos", async (req, res) => {
@@ -45,17 +46,41 @@ app.put("/todo", async (req, res) => {
     return;
   }
 
-  await todoModel.updateOne(
-    {
-      _id: receivedPayload.id,
-    },
-    {
-      completed: true,
-    }
-  );
+  const todo = await todoModel.findById(receivedPayload.id);
+  if(todo.completed == true){
+    await todoModel.updateOne(
+      {
+        _id: receivedPayload.id,
+      },
+      {
+        completed: false,
+      }
+    );
+  }else{
+    await todoModel.updateOne(
+      {
+        _id: receivedPayload.id,
+      },
+      {
+        completed: true,
+      }
+    );
+  }
 
   res.json({
-    message: "todo completed",
+    message: "todo updated",
+  });
+});
+
+app.delete("/todo/:id", async (req, res) => {
+  const id = req.params.id;
+
+  await todoModel.deleteOne({
+    _id:id
+  })
+
+  res.json({
+    message: "todo deleted",
   });
 });
 
