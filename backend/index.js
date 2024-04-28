@@ -84,6 +84,15 @@ app.delete("/todo/:id", async (req, res) => {
   });
 });
 
+app.get('/todo/:id',async (req, res) => {
+  const id = req.params.id;
+  
+  const todo = await todoModel.findById(id);
+  res.json({
+    "todo":todo
+  })
+})
+
 app.listen(3000, () => {
   console.log("Server started at port 3000");
 });
