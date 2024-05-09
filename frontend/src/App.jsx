@@ -2,9 +2,9 @@ import CreateTodo from "./components/CreateTodo";
 
 function App() {
 
-  return <>
+  return <div>
     <CreateTodo/>
-  </>;
+  </div>;
 }
 
 export default App;

@@ -16,21 +16,26 @@ function CreateTodo() {
   }
 
   async function handleCreateTodo() {
-    await axios.post("http://localhost:3000/todo",{
-        "title":title,
-        "description":description
+    await axios.post("http://localhost:3000/todo", {
+      title: title,
+      description: description,
     });
-    document.getElementById('title').value = "";
-    document.getElementById('desc').value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("desc").value = "";
+    setTitle("");
+    setDescription("");
   }
 
   useEffect(() => {
-    fetch("http://localhost:3000/todos").then((res) => res.json()).then((data) => setTodos(data.todos));
+    fetch("http://localhost:3000/todos")
+      .then((res) => res.json())
+      .then((data) => setTodos(data.todos));
     fetchTodosFromBackend();
   }, []);
 
   return (
     <>
+    <div className="bg-[#151515] flex flex-col justify-center items-center">
       <input
         id="title"
         style={{ padding: 10, margin: 10 }}
@@ -38,6 +43,11 @@ function CreateTodo() {
         placeholder="title"
         onChange={(e) => {
           setTitle(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key == "Enter") {
+            document.getElementById("desc").focus();
+          }
         }}
       ></input>
       <br />
@@ -49,11 +59,17 @@ function CreateTodo() {
         onChange={(e) => {
           setDescription(e.target.value);
         }}
+        onKeyDown={(e) => {
+          if (e.key == "Enter") {
+            handleCreateTodo();
+          }
+        }}
       ></input>
       <br />
-      <button style={{ padding: 10, margin: 10 }} onClick={handleCreateTodo}>
+      <button className="p-2 m-2 bg-[#A91D3A] text-white rounded-md px-2 hover:bg-[#C73659]" onClick={handleCreateTodo}>
         Add todo
       </button>
+      </div>
       <TodosContainer todos={todos} />
     </>
   );
