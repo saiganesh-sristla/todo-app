@@ -26,3 +26,4 @@ follow below steps
 - express for backend
 - node for runtime
 - mongodb for database
+- tailwind for styling
