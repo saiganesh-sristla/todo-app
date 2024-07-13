@@ -35,8 +35,9 @@ function CreateTodo() {
 
   return (
     <>
-    <div className="bg-[#151515] flex flex-col justify-center items-center">
+    <div className="bg-[#151515] flex flex-col justify-center items-center py-14">
       <input
+      className="rounded-lg"
         id="title"
         style={{ padding: 10, margin: 10 }}
         type="text"
@@ -52,6 +53,7 @@ function CreateTodo() {
       ></input>
       <br />
       <input
+      className="rounded-lg"
         id="desc"
         style={{ padding: 10, margin: 10 }}
         type="text"
